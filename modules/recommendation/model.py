@@ -1,12 +1,17 @@
 def recommend_action(row, sales_trend):
-    if sales_trend == "down":
-        return "🔥 Urgent: Call customer"
 
-    if row["lead_score"] > 85:
-        return "📞 Call immediately"
+    # Base logic (use existing columns)
+    if row["response_rate"] > 0.8:
+        action = "📞 Call immediately"
 
-    elif row["conversion_rate"] < 0.2:
-        return "💸 Offer discount"
+    elif row["response_rate"] < 0.2:
+        action = "💸 Offer discount"
 
     else:
-        return "📧 Email follow-up"
+        action = "✉️ Email follow-up"
+
+    # Add urgency if trend is down
+    if sales_trend == "down":
+        action = "🔥 " + action
+
+    return action
